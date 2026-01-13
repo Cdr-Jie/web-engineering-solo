@@ -1,7 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-<h2>📅 My Events</h2>
+<div class="my-events-header">
+    <h2>📅 My Events</h2>
+    <a href="{{ route('events.create') }}" class="btn">Create Event</a>
+</div>
 
 @if($events->isEmpty())
     <p>You haven’t created any events yet.</p>
@@ -16,7 +19,7 @@
                 @if(!empty($event->posters) && count($event->posters) > 0)
                     <img src="{{ asset('storage/' . $event->posters[0]) }}" 
                         alt="{{ $event->name }} Poster" 
-                        style="width:100%; max-height:200px; object-fit:cover; margin-bottom:10px;">
+                        class="event-poster">
                 @endif
 
                 <p>{{ $event->date->format('d M Y') }} | {{ $event->time }}</p>
@@ -32,6 +35,10 @@
                 </form>
             </div>
         @endforeach
+    </div>
+
+    <div class="create-event-button-bottom">
+        <a href="{{ route('events.create') }}" class="btn">Create New Event</a>
     </div>
 @endif
 @endsection

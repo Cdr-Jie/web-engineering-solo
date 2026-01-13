@@ -1,6 +1,6 @@
 <nav class="navbar">
     <div class="nav-container">
-        <a href="{{ route('index') }}" class="brand">CEMS</a>
+        <a href="{{ route('dashboard') }}" class="brand">CEMS</a>
         <div class="menu-icon" id="menu-icon">
             <i class="fas fa-bars"></i>
         </div>
@@ -9,7 +9,7 @@
                 <a href="{{ route('dashboard') }}" class="{{ request()->routeIs('dashboard') ? 'active' : '' }}">Dashboard</a>
             </li>
             <li>
-                <a href="{{ route('events.index') }}" class="{{ request()->routeIs('events') ? 'active' : '' }}">Events</a>
+                <a href="{{ route('events.index') }}" class="{{ request()->routeIs('events.index') ? 'active' : '' }}">Events</a>
             </li> 
             <li>
                 <form method="POST" action="{{ route('logout') }}" id="logout-form">

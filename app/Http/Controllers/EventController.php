@@ -24,6 +24,12 @@ class EventController extends Controller
         return view('events.create');
     }
 
+    // Show event details
+    public function show(Event $event)
+    {
+        return view('events.show', compact('event'));
+    }
+
     // Store new event
     public function store(Request $request)
     {

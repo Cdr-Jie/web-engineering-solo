@@ -28,6 +28,22 @@
         <fieldset>
             <legend>Event Information</legend>
 
+            <fieldset>
+            <legend>Event Posters</legend>
+
+            @if($event->posters && count($event->posters) > 0)
+                <div style="margin-bottom: 20px;">
+                    <p><strong>Current Posters:</strong></p>
+                    <div class="events-images-container">
+                        @foreach($event->posters as $poster)
+                            <div class="event-image-item">
+                                <img src="{{ asset('storage/' . $poster) }}" alt="Event Poster" class="event-poster">
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
+
             <label>
                 Event Name <span style="color:red;">*</span>
                 <input type="text" name="name" value="{{ old('name', $event->name) }}" required>
@@ -117,21 +133,7 @@
             </label>
         </fieldset>
 
-        <fieldset>
-            <legend>Event Posters</legend>
-
-            @if($event->posters && count($event->posters) > 0)
-                <div style="margin-bottom: 20px;">
-                    <p><strong>Current Posters:</strong></p>
-                    <div class="events-images-container">
-                        @foreach($event->posters as $poster)
-                            <div class="event-image-item">
-                                <img src="{{ asset('storage/' . $poster) }}" alt="Event Poster" class="event-poster">
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-            @endif
+        
 
             <label>
                 Upload New Posters (Optional)

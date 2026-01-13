@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>User Dashboard</title>
-    @vite('resources/css/style.css')
+    @vite(['resources/css/style.css', 'resources/css/dashboard.css'])
 </head>
 <body>
 
@@ -43,16 +43,23 @@
             
             @if(Auth::user()->organizedEvents()->count() > 0)
                 <div class="events-images-container">
-                    @foreach(Auth::user()->organizedEvents()->take(3)->get() as $event)
-                        <div class="event-image-item">
-                            @if($event->posters && count($event->posters) > 0)
-                                <img src="{{ asset('storage/' . $event->posters[0]) }}" alt="{{ $event->name }}" class="event-poster">
-                            @else
-                                <div class="event-image-placeholder">
-                                    <p>{{ $event->name }}</p>
+                    @foreach(Auth::user()->organizedEvents()->get() as $event)
+                        <a href="{{ route('events.show', $event) }}" style="text-decoration: none;">
+                            <div class="event-image-item">
+                                @if($event->posters && count($event->posters) > 0)
+                                    <img src="{{ asset('storage/' . $event->posters[0]) }}" alt="{{ $event->name }}" class="event-poster">
+                                @else
+                                    <div class="event-image-placeholder">
+                                        <p>{{ $event->name }}</p>
+                                    </div>
+                                @endif
+                                <div class="event-info-tooltip">
+                                    <strong>{{ $event->name }}</strong>
+                                    <p>📅 {{ $event->date->format('d M Y') }}</p>
+                                    <p>📍 {{ substr($event->venue, 0, 30) }}</p>
                                 </div>
-                            @endif
-                        </div>
+                            </div>
+                        </a>
                     @endforeach
                 </div>
             @endif
@@ -66,22 +73,29 @@
             <p>View events you have registered for.</p>
             
             @php
-                $registeredEvents = Auth::user()->eventRegistrations()->with('event')->take(3)->get() ?? collect();
+                $registeredEvents = Auth::user()->eventRegistrations()->with('event')->get() ?? collect();
             @endphp
             
             @if($registeredEvents->count() > 0)
                 <div class="events-images-container">
                     @foreach($registeredEvents as $registration)
                         @if($registration->event)
-                            <div class="event-image-item">
-                                @if($registration->event->posters && count($registration->event->posters) > 0)
-                                    <img src="{{ asset('storage/' . $registration->event->posters[0]) }}" alt="{{ $registration->event->name }}" class="event-poster">
-                                @else
-                                    <div class="event-image-placeholder">
-                                        <p>{{ $registration->event->name }}</p>
+                            <a href="{{ route('events.show', $registration->event) }}" style="text-decoration: none;">
+                                <div class="event-image-item">
+                                    @if($registration->event->posters && count($registration->event->posters) > 0)
+                                        <img src="{{ asset('storage/' . $registration->event->posters[0]) }}" alt="{{ $registration->event->name }}" class="event-poster">
+                                    @else
+                                        <div class="event-image-placeholder">
+                                            <p>{{ $registration->event->name }}</p>
+                                        </div>
+                                    @endif
+                                    <div class="event-info-tooltip">
+                                        <strong>{{ $registration->event->name }}</strong>
+                                        <p>📅 {{ $registration->event->date->format('d M Y') }}</p>
+                                        <p>📍 {{ substr($registration->event->venue, 0, 30) }}</p>
                                     </div>
-                                @endif
-                            </div>
+                                </div>
+                            </a>
                         @endif
                     @endforeach
                 </div>

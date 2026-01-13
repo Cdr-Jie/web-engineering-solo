@@ -25,6 +25,13 @@
     <form method="POST" action="{{ route('events.store') }}" enctype="multipart/form-data" class="event-form">
         @csrf
 
+        <!-- Event Posters -->
+        <label>
+            Event Posters * (max 4)
+            <input type="file" name="posters[]" multiple accept="image/*">
+            <small>Hold Ctrl (Windows) / Cmd (Mac) to select multiple images (up to 4)</small>
+        </label>
+
         <!-- Event Name -->
         <label>
             Event Name *
@@ -119,12 +126,7 @@
             <textarea name="remarks" rows="2">{{ old('remarks') }}</textarea>
         </label>
 
-        <!-- Event Posters -->
-        <label>
-            Event Posters * (max 4)
-            <input type="file" name="posters[]" multiple accept="image/*">
-            <small>Hold Ctrl (Windows) / Cmd (Mac) to select multiple images (up to 4)</small>
-        </label>
+        
 
         <!-- Buttons -->
         <button type="submit" class="btn btn-primary">Create Event</button>
